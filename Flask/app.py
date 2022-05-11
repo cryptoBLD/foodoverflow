@@ -20,12 +20,12 @@ Bootstrap(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return render_template('index.html')
+    return render_template('index.html', meal_id=get_random_recipe()[0], meal_image=get_random_recipe()[2])
 
 
-@app.route('/details', methods=['GET', 'POST'])
-def details():
-    pass
+@app.route('/details/<int:id>', methods=['GET', 'POST'])
+def details(id):
+    return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1])
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -42,10 +42,25 @@ nav.init_app(app)
 
 
 def get_random_recipe():
-    random = requests.get('https://www.themealdb.com/api/json/v1/1/random.php')
-    print(random.json())
+    random_meal = requests.get('https://www.themealdb.com/api/json/v1/1/random.php').json()
+    id = random_meal['meals'][0]['idMeal']
+    title = random_meal['meals'][0]['strMeal']
+    image = random_meal['meals'][0]['strMealThumb']
+    tags = random_meal['meals'][0]['strTags']
+    return id, title, image, tags
 
+
+def get_meal(id):
+    meal = requests.get('https://www.themealdb.com/api/json/v1/1/lookup.php?i={0}'.format(id)).json()
+    title = meal['meals'][0]['strMeal']
+
+    ingredients = []
+
+    for i in range(1,20):
+        if meal['meals'][0]['strIngredient{0}'.format(i)] != '':
+            ingredients.append(meal['meals'][0]['strIngredient{0}'.format(i)])
+
+    return title, ingredients
 
 if __name__ == '__main__':
-    get_random_recipe()
     app.run(debug=True)

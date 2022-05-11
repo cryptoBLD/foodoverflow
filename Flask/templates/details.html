@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/details.css') }}">
+    <title>{{meal_title}}</title>
+</head>
+<body>
+    <h1>
+        {{meal_title}}
+    </h1>
+    <ul class="ingredient">
+        {% for name in meal_ingredients[0:] %}
+        <li>{{name}}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
