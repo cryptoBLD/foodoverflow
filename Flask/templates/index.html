@@ -19,11 +19,29 @@
 <div class="container">
     <div class="main">
         <h1>Welcome to Foodoverflow!</h1>
-        <div class="image">
-            <a href="/details/{{meal_id}}">
-                <img src="{{meal_image}}" alt="{{meal_id}}">
+        <div class="receipt" onclick="location.href='/details/{{meal1[0]}}';">
+            <a href="/details/{{meal1[0]}}">
+                <img src="{{meal1[2]}}" alt="{{meal1[1]}}">
             </a>
-
+            <div class="overlay">
+                <h2>{{meal1[1]}}</h2>
+            </div>
+        </div>
+        <br>
+        <div class="receipt" onclick="location.href='/details/{{meal2[0]}}';">
+            <a href="/details/{{meal2[0]}}">
+                <img src="{{meal2[2]}}" alt="{{meal2[1]}}">
+            </a>
+            <div class="overlay">
+                <h2>{{meal2[1]}}</h2>
+            </div>
+        </div>
+        <br>
+        <div class="receipt" onclick="location.href='/details/{{meal3[0]}}';">
+            <img src="{{meal3[2]}}" alt="{{meal3[1]}}">
+            <div class="overlay">
+                <h2>{{meal3[1]}}</h2>
+            </div>
         </div>
     </div>
 </div>

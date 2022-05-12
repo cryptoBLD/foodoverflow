@@ -20,8 +20,7 @@ Bootstrap(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    recipe = get_random_recipe()
-    return render_template('index.html', meal_id=recipe[0], meal_title=recipe[1], meal_image=recipe[2], meal_tags=recipe[3])
+    return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(), meal3=get_random_recipe())
 
 
 @app.route('/details/<int:id>', methods=['GET', 'POST'])
