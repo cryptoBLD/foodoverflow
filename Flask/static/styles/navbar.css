@@ -1,8 +1,8 @@
 ul.navbar {
     list-style-type: none;
-    margin: 0;
     padding: 0;
     overflow: hidden;
+    margin: 0;
     background-color: #333;
 }
 
@@ -13,6 +13,7 @@ ul.navbar li {
 ul.navbar li a {
     display: inline-block;
     color: white;
+    margin: 0px;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;

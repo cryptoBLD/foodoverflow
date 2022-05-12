@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
@@ -11,9 +17,15 @@
     <li><a href="{{ url_for('about') }}">About</a></li>
 </ul>
 <div class="container">
-    <a href="/details/{{meal_id}}">
-        <img src="{{meal_image}}" alt="{{meal_id}}" classname="img-thumbnail">
-    </a>
+    <div class="main">
+        <h1>Welcome to Foodoverflow!</h1>
+        <div class="image">
+            <a href="/details/{{meal_id}}">
+                <img src="{{meal_image}}" alt="{{meal_id}}">
+            </a>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>
