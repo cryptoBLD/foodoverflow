@@ -6,18 +6,29 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/foodoverflow_logo.png') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
-<ul class="navbar">
-    <li><a class="active" href="/">Home</a></li>
-    <li><a href="{{ url_for('about') }}">About</a></li>
-</ul>
-<h1>Welcome to Foodoverflow!</h1>
 <div class="container">
+    <div class="left">
+        <a href="/">
+            <img src="/static/images/foodoverflow_logo.png" alt="logo" class="logo">
+        </a>
+    </div>
+    <div class="middle" onclick="location.href='/';">
+        <h1>Welcome to Foodoverflow!</h1>
+    </div>
+    <div class="left">
+        <a href="/">
+            <img src="/static/images/foodoverflow_logo.png" alt="logo" class="logo">
+        </a>
+    </div>
+</div>
+<div>
     <div class="main">
         <div class="receipt" onclick="location.href='/details/{{meal1[0]}}';">
             <a href="/details/{{meal1[0]}}">

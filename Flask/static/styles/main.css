@@ -6,4 +6,16 @@ h1 {
     font-size: 4em;
     margin: 1em;
     text-align: center;
+    color: #ffffff;
+}
+
+body {
+    background-image: url("/static/images/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
 }
