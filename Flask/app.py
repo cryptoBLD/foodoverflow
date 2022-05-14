@@ -20,6 +20,12 @@ Bootstrap(app)
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == 'POST':
+        print(request.form)
+        return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(),
+                               meal3=get_random_recipe())
+    else:
+        return render_template('home.html', title='Home', random_meal=get_random_recipe())
     return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(), meal3=get_random_recipe())
 
 

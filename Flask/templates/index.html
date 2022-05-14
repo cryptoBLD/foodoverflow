@@ -29,6 +29,7 @@
     </div>
 </div>
 <div>
+    <h2>You can either choose one of 3 random receipts</h2>
     <div class="main">
         <div class="receipt" onclick="location.href='/details/{{meal1[0]}}';">
             <a href="/details/{{meal1[0]}}">
@@ -53,6 +54,19 @@
             </div>
         </div>
     </div>
+    <h2>Or you can search for a specific recipe</h2>
+</div>
+<div class="search">
+    <form method="post">
+        <input type="text" name="search" placeholder="Search for a recipe...">
+        <select name="Filter">
+            <option value="" disabled selected>Filter</option>
+            <option value="Category">Category</option>
+            <option value="Cuisine">Cuisine</option>
+            <option value="Ingredient">Ingredient</option>
+        </select>
+        <input type="submit" value="Search">
+    </form>
 </div>
 </body>
 </html>
