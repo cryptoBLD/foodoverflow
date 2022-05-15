@@ -23,8 +23,8 @@ def details(id):
 
 
 @app.route('/search/<filter>/<item>', methods=['GET', 'POST'])
-def search():
-    pass
+def search(filter, item):
+    return render_template('search.html')
 
 
 def get_random_recipe():
@@ -47,6 +47,7 @@ def get_meal(id):
             ingredients.append(meal['meals'][0]['strIngredient{0}'.format(i)])
 
     return title, ingredients
+
 
 if __name__ == '__main__':
     app.run(debug=True)
