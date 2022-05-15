@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/navbar.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/index.css') }}">
@@ -61,9 +60,9 @@
         <input type="text" name="search" placeholder="Search for a recipe...">
         <select name="Filter">
             <option value="" disabled selected>Filter</option>
-            <option value="Category">Category</option>
-            <option value="Cuisine">Cuisine</option>
-            <option value="Ingredient">Ingredient</option>
+            <option value="c">Category</option>
+            <option value="a">Cuisine</option>
+            <option value="i">Ingredient</option>
         </select>
         <input type="submit" value="Search">
     </form>

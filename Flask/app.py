@@ -1,32 +1,20 @@
 import requests
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from flask_bootstrap import Bootstrap
-from flask_nav import Nav
 from flask_nav.elements import *
 
 
-topbar = Navbar(
-    View('Home', 'home'),
-    View('About', 'about')
-)
-
-nav = Nav()
-nav.register_element('top', topbar)
-
-
 app = Flask(__name__)
-Bootstrap(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        print(request.form)
+        print(request.form.get('search'))
+        print(request.form.get('Filter'))
+        return redirect('/search/{0}/{1}'.format(request.form.get('search'), request.form.get('Filter')), code=301)
+    else:
         return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(),
                                meal3=get_random_recipe())
-    else:
-        return render_template('home.html', title='Home', random_meal=get_random_recipe())
-    return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(), meal3=get_random_recipe())
 
 
 @app.route('/details/<int:id>', methods=['GET', 'POST'])
@@ -34,17 +22,9 @@ def details(id):
     return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1])
 
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search/<filter>/<item>', methods=['GET', 'POST'])
 def search():
     pass
-
-
-@app.route('/about', methods=['GET', 'POST'])
-def about():
-    pass
-
-
-nav.init_app(app)
 
 
 def get_random_recipe():
