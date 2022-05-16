@@ -19,12 +19,19 @@ def home():
 
 @app.route('/details/<int:id>', methods=['GET', 'POST'])
 def details(id):
-    return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1])
+    if id == 1:
+        return redirect('/', code=301)
+    else:
+        return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1])
 
 
-@app.route('/search/<filter>/<item>', methods=['GET', 'POST'])
+@app.route('/search/<item>/<filter>', methods=['GET', 'POST'])
 def search(filter, item):
-    return render_template('search.html')
+    if request.method == 'POST':
+        pass
+    else:
+        list_meals = get_category(filter, item)
+    return render_template('search.html', meals=list_meals)
 
 
 def get_random_recipe():
@@ -49,5 +56,22 @@ def get_meal(id):
     return title, ingredients
 
 
+def get_category(filter, item):
+    final_list = []
+    if filter == 's':
+        list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/search.php?s={0}'.format(item)).json()
+    else:
+        list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/filter.php?{0}={1}'.format(filter, item)).json()
+    print(list_meals['meals'])
+    if list_meals['meals'] is None:
+        final_list = [['', '/static/images/not_found.png', '1']]
+        return final_list
+    for i in list_meals['meals']:
+        temp_list = [i['strMeal'], i['strMealThumb'], i['idMeal']]
+        final_list.append(temp_list)
+    return final_list
+
+
 if __name__ == '__main__':
+    get_category('c', 'beef')
     app.run(debug=True)

@@ -12,6 +12,34 @@
     <title>Search</title>
 </head>
 <body>
+<div class="container">
+    <div class="left">
+        <a href="/">
+            <img src="/static/images/foodoverflow_logo.png" alt="logo" class="logo">
+        </a>
+    </div>
+    <div class="middle" onclick="location.href='/';">
+        <h1>Search results:</h1>
+    </div>
+    <div class="left">
+        <a href="/">
+            <img src="/static/images/foodoverflow_logo.png" alt="logo" class="logo">
+        </a>
+    </div>
+</div>
+<div>
+<div class="search-container">
+    {% for meal in meals %}
+    <div class="receipt" onclick="location.href='/details/{{meal[2]}}';">
+            <a href="/details/{{meal[2]}}">
+                <img src="{{meal[1]}}" alt="{{meal[0]}}">
+            </a>
 
+            <div class="overlay">
+                <h2>{{meal[0]}}</h2>
+            </div>
+    </div>
+    {% endfor %}
+</div>
 </body>
 </html>
