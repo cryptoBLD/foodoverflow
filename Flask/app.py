@@ -9,8 +9,6 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        print(request.form.get('search'))
-        print(request.form.get('Filter'))
         return redirect('/search/{0}/{1}'.format(request.form.get('search'), request.form.get('Filter')), code=301)
     else:
         return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(),
@@ -49,7 +47,7 @@ def get_meal(id):
 
     ingredients = []
 
-    for i in range(1,20):
+    for i in range(1, 20):
         if meal['meals'][0]['strIngredient{0}'.format(i)] != '':
             ingredients.append(meal['meals'][0]['strIngredient{0}'.format(i)])
 
@@ -62,7 +60,6 @@ def get_category(filter, item):
         list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/search.php?s={0}'.format(item)).json()
     else:
         list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/filter.php?{0}={1}'.format(filter, item)).json()
-    print(list_meals['meals'])
     if list_meals['meals'] is None:
         final_list = [['', '/static/images/not_found.png', '1']]
         return final_list
