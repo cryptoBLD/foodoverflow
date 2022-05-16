@@ -21,4 +21,4 @@ Foodoverflow has the following functionalities:
     * You can rate and review recipes.
 
 ## Creators
-Florian, Yann
+Greenix and cryptoBLD
