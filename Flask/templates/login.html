@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/details.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/login.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/foodoverflow_logo.png') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
-    <title>{{meal_title}}</title>
+    <meta charset="UTF-8">
+    <title>Login</title>
 </head>
 <body>
 <div class="container">
@@ -18,7 +19,7 @@
         </a>
     </div>
     <div class="middle" onclick="location.href='/';">
-        <h1>{{meal_title}}</h1>
+        <h1>Login</h1>
     </div>
     <div class="left">
         <a href="/">
@@ -26,26 +27,12 @@
         </a>
     </div>
 </div>
-<div class="details-container">
-    <div>
-        <table class="ingredient">
-            <tr>
-                <th>Ingredients</th>
-            </tr>
-            {% for key,value in meal_ingredients.items() %}
-                <tr>
-                    <td>{{ value }} </td>
-                    <td>{{ key }} </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </div>
-    <div class="img">
-        <img src="{{meal_image}}" alt="{{meal_title}}">
-    </div>
-</div>
-<div class="review">
-
+<div class="login-container">
+    <form action = "/setcookie" method = "POST">
+        <p><h3>Enter Username</h3></p>
+        <p><input type = 'text' name = 'nm'/></p>
+        <p><input type = 'submit' value = 'Login'/></p>
+    </form>
 </div>
 </body>
 </html>

@@ -1,11 +1,28 @@
 # Imports
 import requests
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, make_response
 from flask_nav.elements import *
+import hashlib
 
 
 # Flask App initialization
 app = Flask(__name__)
+
+
+logins = {
+    'michael': None,
+    'peter': None,
+    'joscha': None,
+    'reto': None,
+    'martin': None,
+    'marianne': None,
+    'bruno': None,
+    'christa': None,
+    'tanja': None,
+    'thomas': None,
+    'sebastian': None,
+    'ben': None
+}
 
 
 # Flask App Routes
@@ -21,10 +38,13 @@ def home():
 # Details page
 @app.route('/details/<int:id>', methods=['GET', 'POST'])
 def details(id):
-    if id == 1:
-        return redirect('/', code=301)  # Redirect to homepage if id is 1 -> id is 1 if the search results are empty
-    else:
-        return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1])
+    if request.method == 'GET':
+        if id == 1:
+            return redirect('/', code=301)  # Redirect to homepage if id is 1 -> id is 1 if the search results are empty
+        else:
+            return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2])
+    if request.method == 'POST':
+        pass
 
 
 # Search page
@@ -35,6 +55,20 @@ def search(filter, item):
     else:
         list_meals = get_category(filter, item) # Get the list of meals from the API with the given filter and item
     return render_template('search.html', meals=list_meals) # Render the search page with the list of meals
+
+
+@app.route('/login', methods=['GET'])
+def login():
+    return render_template('login.html')
+
+
+@app.route('/setcookie', methods=['POST', 'GET'])
+def setcookie():
+    if request.method == 'POST':
+        user = request.form['nm']
+        resp = make_response(redirect('/'))
+        resp.set_cookie('userID', user)
+        return resp
 
 
 # functions
@@ -52,14 +86,15 @@ def get_random_recipe():
 def get_meal(id):
     meal = requests.get('https://www.themealdb.com/api/json/v1/1/lookup.php?i={0}'.format(id)).json()
     title = meal['meals'][0]['strMeal']
+    image = meal['meals'][0]['strMealThumb']
 
-    ingredients = []
+    ingredients = {}
 
     for i in range(1, 20):
-        if meal['meals'][0]['strIngredient{0}'.format(i)] != '':
-            ingredients.append(meal['meals'][0]['strIngredient{0}'.format(i)])
+        if meal['meals'][0]['strIngredient{0}'.format(i)] != '':  #test if ingredient not empty
+            ingredients[meal['meals'][0]['strIngredient{0}'.format(i)]] = meal['meals'][0]['strMeasure{0}'.format(i)]
 
-    return title, ingredients
+    return title, ingredients, image # return title, ingredients, image of meal
 
 
 # function to get a list of recipes from the API with the given filter and item
