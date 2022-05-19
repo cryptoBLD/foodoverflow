@@ -2,27 +2,16 @@
 import requests
 from flask import Flask, render_template, redirect, make_response
 from flask_nav.elements import *
-import hashlib
+import json
 
 
 # Flask App initialization
 app = Flask(__name__)
 
 
-logins = {
-    'michael': None,
-    'peter': None,
-    'joscha': None,
-    'reto': None,
-    'martin': None,
-    'marianne': None,
-    'bruno': None,
-    'christa': None,
-    'tanja': None,
-    'thomas': None,
-    'sebastian': None,
-    'ben': None
-}
+tokens = open('../files/tokens.json', 'r')
+tokens_dict = json.load(tokens)
+tokens.close()
 
 
 # Flask App Routes
@@ -111,6 +100,18 @@ def get_category(filter, item):
         temp_list = [i['strMeal'], i['strMealThumb'], i['idMeal']]  # Create a temporary list with the title, image and id of the recipe
         final_list.append(temp_list)    # Append the temporary list to the final list
     return final_list   # Return the list of meals
+
+
+def get_reviews(id):
+    reviews = requests.get('https://informatik.mygymer.ch/fts/themealdb/?id={0}'.format(id)).json()
+    total_stars = 0
+    reviews_processed = []
+    for i in range(len(reviews['bewertungen'])):
+        reviews_processed.append([reviews['bewertungen'][i]['name'], reviews['bewertungen'][i]['kommentar'], reviews['bewertungen'][i]['sterne']])
+        total_stars += reviews['bewertungen'][i]['sterne']
+    total_stars = total_stars / len(reviews['bewertungen'])
+    return reviews_processed, total_stars
+
 
 
 # run the app
