@@ -20,8 +20,12 @@ tokens.close()
 def home():
     if request.method == 'POST':
         return redirect('/search/{0}/{1}'.format(request.form.get('search'), request.form.get('Filter')), code=301) # Redirect to search page with the given search values
-    else:
+    if request.cookies.get('userID'):
         return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(), meal3=get_random_recipe())   # Render the homepage with 3 random recipes
+    else:
+        resp = make_response(redirect('/'))
+        resp.set_cookie('userID', 'john')
+        return resp
 
 
 # Details page
@@ -51,11 +55,11 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/setcookie', methods=['POST', 'GET'])
-def setcookie():
+@app.route('/setcookie/<val>', methods=['POST', 'GET'])
+def setcookie(val):
     if request.method == 'POST':
         user = request.form['nm']
-        resp = make_response(redirect('/'))
+        resp = make_response(redirect('{0}'.format(val)))
         resp.set_cookie('userID', user)
         return resp
 
