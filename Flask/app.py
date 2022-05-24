@@ -1,5 +1,6 @@
 # Imports
 import requests
+import requests.cookies
 from flask import Flask, render_template, redirect, make_response
 from flask_nav.elements import *
 import json
@@ -35,9 +36,21 @@ def details(id):
         if id == 1:
             return redirect('/', code=301)  # Redirect to homepage if id is 1 -> id is 1 if the search results are empty
         else:
-            return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2])
+            return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
     if request.method == 'POST':
-        pass
+        print(1)
+        for i in range(len(tokens_dict['benutzer'])):
+            if tokens_dict['benutzer'][i]['name'] == request.cookies.get('userID'):
+                print(2)
+                token = tokens_dict['benutzer'][i]['token']
+                break
+        print(3)
+        post_request = {"token": token, "meal_id": id, "sterne": 3, "kommentar": request.form.get('own-review')}
+        json_ = json.dumps(post_request)
+        print(json_)
+        r = requests.post('https://informatik.mygymer.ch/fts/themealdb/', data=json_)
+        print(r.text)
+        return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
 
 
 # Search page
@@ -50,16 +63,16 @@ def search(filter, item):
     return render_template('search.html', meals=list_meals) # Render the search page with the list of meals
 
 
-@app.route('/login', methods=['GET'])
-def login():
-    return render_template('login.html')
+@app.route('/login/<val>', methods=['GET'])
+def login(val):
+    return render_template('login.html', id=val)
 
 
 @app.route('/setcookie/<val>', methods=['POST', 'GET'])
 def setcookie(val):
     if request.method == 'POST':
         user = request.form['nm']
-        resp = make_response(redirect('{0}'.format(val)))
+        resp = make_response(redirect('/details/{0}'.format(val)))
         resp.set_cookie('userID', user)
         return resp
 
@@ -87,7 +100,7 @@ def get_meal(id):
         if meal['meals'][0]['strIngredient{0}'.format(i)] != '':  #test if ingredient not empty
             ingredients[meal['meals'][0]['strIngredient{0}'.format(i)]] = meal['meals'][0]['strMeasure{0}'.format(i)]
 
-    return title, ingredients, image # return title, ingredients, image of meal
+    return title, ingredients, image
 
 
 # function to get a list of recipes from the API with the given filter and item
