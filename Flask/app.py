@@ -4,6 +4,7 @@ import requests.cookies
 from flask import Flask, render_template, redirect, make_response
 from flask_nav.elements import *
 import json
+import re
 
 
 # Flask App initialization
@@ -42,8 +43,10 @@ def details(id):
             if tokens_dict['benutzer'][i]['name'] == request.cookies.get('userID'):
                 token = tokens_dict['benutzer'][i]['token']
                 break
-        post_request = {"token": token, "meal_id": id, "sterne": 3, "kommentar": request.form.get('own-review')}
+        star = request.form.get('rating')
+        post_request = {"token": token, "mealId": id, "sterne": star, "kommentar": request.form.get('own-review')}
         json_ = json.dumps(post_request)
+        print(json_)
         r = requests.post('https://informatik.mygymer.ch/fts/themealdb/', data=json_)
         print(r.text)
         return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
