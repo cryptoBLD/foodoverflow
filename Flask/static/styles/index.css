@@ -39,19 +39,12 @@
     opacity: 1;
 }
 
-img[class="receipt"] {
+img {
     display: block;
     height: 100%;
     width: 100%;
     object-fit: contain;
     border-radius: 0.5em;
-}
-
-img[class="star"] {
-    float: right;
-    height: 1em;
-    width: 1em;
-    object-fit: contain;
 }
 
 .search {
@@ -93,3 +86,13 @@ select:hover {
     cursor: pointer;
 }
 
+img[class="star"] {
+    height: 1em;
+    width: 1em;
+    float: right;
+}
+
+h2[class="review_star"] {
+    text-align: right;
+    color: #fff200;
+}

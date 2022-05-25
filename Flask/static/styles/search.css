@@ -46,3 +46,13 @@ img {
 .receipt:hover .overlay {
     opacity: 1;
 }
+img[class="star"] {
+    height: 1em;
+    width: 1em;
+    float: right;
+}
+
+h2[class="review_star"] {
+    text-align: right;
+    color: #fff200;
+}

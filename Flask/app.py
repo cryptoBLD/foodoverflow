@@ -38,16 +38,12 @@ def details(id):
         else:
             return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
     if request.method == 'POST':
-        print(1)
         for i in range(len(tokens_dict['benutzer'])):
             if tokens_dict['benutzer'][i]['name'] == request.cookies.get('userID'):
-                print(2)
                 token = tokens_dict['benutzer'][i]['token']
                 break
-        print(3)
         post_request = {"token": token, "meal_id": id, "sterne": 3, "kommentar": request.form.get('own-review')}
         json_ = json.dumps(post_request)
-        print(json_)
         r = requests.post('https://informatik.mygymer.ch/fts/themealdb/', data=json_)
         print(r.text)
         return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
@@ -80,12 +76,20 @@ def setcookie(val):
 # functions
 # function to get a random recipe
 def get_random_recipe():
+    total_review = 0
     random_meal = requests.get('https://www.themealdb.com/api/json/v1/1/random.php').json() # Get a random recipe from the API
     id = random_meal['meals'][0]['idMeal']  # Get the id of the random recipe
     title = random_meal['meals'][0]['strMeal']  # Get the title of the random recipe
     image = random_meal['meals'][0]['strMealThumb']   # Get the image of the random recipe
-    tags = random_meal['meals'][0]['strTags']   # Get the tags of the random recipe
-    return id, title, image, tags   # Return the id, title, image and tags of the random recipe
+
+    review = requests.get('https://informatik.mygymer.ch/fts/themealdb/?id={0}'.format(id)).json()  # Get the reviews of the random recipe from the API
+    for i in range(len(review['bewertungen'])):
+        total_review += int(review['bewertungen'][i]['sterne'])
+    if total_review == 0:
+        stars = 'N/A'
+    else:
+        stars = round(total_review / len(review['bewertungen']), 1)
+    return id, title, image, stars   # Return the id, title, image and the overall review of the random recipe
 
 
 # function to get a specific recipe
@@ -106,6 +110,7 @@ def get_meal(id):
 # function to get a list of recipes from the API with the given filter and item
 def get_category(filter, item):
     final_list = []
+    total_review = 0
     if filter == 's':   # Search by meal name
         list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/search.php?s={0}'.format(item)).json()   # Get the list of meals from the API with the given filter and item
     else:
@@ -116,6 +121,15 @@ def get_category(filter, item):
     for i in list_meals['meals']:
         temp_list = [i['strMeal'], i['strMealThumb'], i['idMeal']]  # Create a temporary list with the title, image and id of the recipe
         final_list.append(temp_list)    # Append the temporary list to the final list
+        review = requests.get('https://informatik.mygymer.ch/fts/themealdb/?id={0}'.format(i['idMeal'])).json()  # Get the reviews of the random recipe from the API
+        for ii in range(len(review['bewertungen'])):
+            total_review += int(review['bewertungen'][ii]['sterne'])
+        if total_review == 0:
+            stars = 'N/A'
+        else:
+            stars = round(total_review / len(review['bewertungen']), 1)
+        temp_list.append(stars)  # Append the overall review to the temporary list
+
     return final_list   # Return the list of meals
 
 

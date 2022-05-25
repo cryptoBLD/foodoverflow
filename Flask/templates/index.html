@@ -32,25 +32,27 @@
     <div class="main">
         <div class="receipt" onclick="location.href='/details/{{meal1[0]}}';">
             <a href="/details/{{meal1[0]}}">
-                <img src="{{meal1[2]}}" alt="{{meal1[1]}}" class="receipt">
+                <img src="{{meal1[2]}}" alt="{{meal1[1]}}">
             </a>
             <div class="overlay">
                 <h2>{{meal1[1]}}</h2>
+                <h2 class="review_star">{{meal1[3]}}<img src="/static/images/star.png" alt="star" class="star"></h2>
             </div>
         </div>
         <div class="receipt" onclick="location.href='/details/{{meal2[0]}}';">
             <a href="/details/{{meal2[0]}}">
-                <img src="{{meal2[2]}}" alt="{{meal2[1]}}" class="receipt">
+                <img src="{{meal2[2]}}" alt="{{meal2[1]}}">
             </a>
             <div class="overlay">
-                <h2>{{meal2[1]}} {{meal2[3]}}</h2>
-                <h2 class="review_star">4<img src="/static/images/star.png" alt="star" class="star"></h2>
+                <h2>{{meal2[1]}}</h2>
+                <h2 class="review_star">{{meal2[3]}}<img src="/static/images/star.png" alt="star" class="star"></h2>
             </div>
         </div>
         <div class="receipt" onclick="location.href='/details/{{meal3[0]}}';">
-            <img src="{{meal3[2]}}" alt="{{meal3[1]}}" class="receipt">
+            <img src="{{meal3[2]}}" alt="{{meal3[1]}}">
             <div class="overlay">
                 <h2>{{meal3[1]}}</h2>
+                <h2 class="review_star">{{meal3[3]}}<img src="/static/images/star.png" alt="star" class="star"></h2>
             </div>
         </div>
     </div>
