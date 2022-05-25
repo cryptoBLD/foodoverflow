@@ -26,7 +26,7 @@ def home():
         return render_template('index.html', meal1=get_random_recipe(), meal2=get_random_recipe(), meal3=get_random_recipe())   # Render the homepage with 3 random recipes
     else:
         resp = make_response(redirect('/'))
-        resp.set_cookie('userID', 'john')
+        resp.set_cookie('userID', 'ben')
         return resp
 
 
@@ -37,7 +37,7 @@ def details(id):
         if id == 1:
             return redirect('/', code=301)  # Redirect to homepage if id is 1 -> id is 1 if the search results are empty
         else:
-            return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
+            return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id, name=request.cookies.get('userID'), reviews=get_reviews(id)[0])
     if request.method == 'POST':
         for i in range(len(tokens_dict['benutzer'])):
             if tokens_dict['benutzer'][i]['name'] == request.cookies.get('userID'):
@@ -49,7 +49,7 @@ def details(id):
         print(json_)
         r = requests.post('https://informatik.mygymer.ch/fts/themealdb/', data=json_)
         print(r.text)
-        return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id)
+        return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1], meal_image=get_meal(id)[2], meal_id=id, name=request.cookies.get('userID'), reviews=get_reviews(id)[0])
 
 
 # Search page
@@ -145,7 +145,6 @@ def get_reviews(id):
         total_stars += reviews['bewertungen'][i]['sterne']
     total_stars = total_stars / len(reviews['bewertungen'])
     return reviews_processed, total_stars
-
 
 
 # run the app

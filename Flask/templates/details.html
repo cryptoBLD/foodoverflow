@@ -53,7 +53,7 @@
         <div class="own-review">
             <table>
                 <tr>
-                    <th>Write a review and submit it by pressing on the Star representing your rating!</th>
+                    <th>Hi {{name}}! Write a review and submit it by pressing on the Star with your rating!</th>
                 </tr>
                 <tr>
                     <td><textarea rows="4" placeholder="Write your own review" name="own-review"></textarea></td>
@@ -68,6 +68,15 @@
             </div>
         </div>
     </form>
+</div>
+<div class="display-reviews">
+    {% for review in reviews %}
+    <div class="review">
+        <h3>Review from {{review[0]}}</h3><br>
+        <p>{{review[1]}}</p>
+        <p>Rating: {{review[2]}} Stars</p>
+    </div>
+    {% endfor %}
 </div>
 </body>
 </html>
