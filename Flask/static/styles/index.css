@@ -39,12 +39,19 @@
     opacity: 1;
 }
 
-img {
+img[class="receipt"] {
     display: block;
     height: 100%;
     width: 100%;
     object-fit: contain;
     border-radius: 0.5em;
+}
+
+img[class="star"] {
+    float: right;
+    height: 1em;
+    width: 1em;
+    object-fit: contain;
 }
 
 .search {
@@ -85,3 +92,4 @@ select {
 select:hover {
     cursor: pointer;
 }
+
