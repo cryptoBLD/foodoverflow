@@ -44,6 +44,16 @@
         <img src="{{meal_image}}" alt="{{meal_title}}">
     </div>
 </div>
+<div class="instructions">
+    <table class="steps">
+        <tr>
+            <th> Instructions </th>
+        </tr>
+        {% for step in meal_instructions %}
+            <tr> <td> {{ step }} </td> </tr>
+        {% endfor %}
+    </table>
+</div>
 <div class="reviews-container">
     <h2>Reviews</h2>
     <a href="/login/{{meal_id}}">
