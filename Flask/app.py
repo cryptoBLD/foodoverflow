@@ -143,7 +143,8 @@ def get_reviews(id):
     for i in range(len(reviews['bewertungen'])):
         reviews_processed.append([reviews['bewertungen'][i]['name'], reviews['bewertungen'][i]['kommentar'], reviews['bewertungen'][i]['sterne']])
         total_stars += reviews['bewertungen'][i]['sterne']
-    total_stars = total_stars / len(reviews['bewertungen'])
+    if len(reviews['bewertungen']) != 0:
+        total_stars = total_stars / len(reviews['bewertungen'])
     return reviews_processed, total_stars
 
 
