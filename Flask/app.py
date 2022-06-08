@@ -29,7 +29,7 @@ def home():
                                meal3=get_random_recipe())  # Render the homepage with 3 random recipes
     else:  # If no cookie has been set, assign Website token
         resp = make_response(redirect('/'))
-        resp.set_cookie('userID', 'ben')
+        resp.set_cookie('userID', 'Foodoverflow')
         return resp
 
 
@@ -82,7 +82,7 @@ def setcookie(val):
         if user in tokens_dict.values():  # Check if user has a Token assigned, if not the website cookie gets assigned
             resp.set_cookie('userID', user)
         else:
-            resp.set_cookie('userID', 'ben')
+            resp.set_cookie('userID', 'Foodoverflow')
         return resp
 
 #############
@@ -129,8 +129,7 @@ def get_category(filter, item):
         list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/search.php?s={0}'.format(
             item)).json()  # Get the list of meals from the API with the given filter and item
     else:
-        list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/filter.php?{0}={1}'.format(filter,
-                                                                                                      item)).json()  # Get the list of meals from the API with the given filter and item
+        list_meals = requests.get('https://www.themealdb.com/api/json/v1/1/filter.php?{0}={1}'.format(filter, item)).json()  # Get the list of meals from the API with the given filter and item
     if list_meals['meals'] is None:  # If the list of meals is empty
         final_list = [['', '/static/images/not_found.png',
                        '1']]  # Return a list with a single element with the title, image and id of the not found recipe

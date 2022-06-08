@@ -27,7 +27,7 @@
     </div>
 </div>
 <div class="details-container">
-    <div>
+    <div class="ing">
         <table class="ingredient">
             <tr>
                 <th>Ingredients</th>
@@ -40,7 +40,7 @@
             {% endfor %}
         </table>
     </div>
-    <div class="img">
+    <div class="img_container">
         <img src="{{meal_image}}" alt="{{meal_title}}">
     </div>
 </div>
@@ -50,7 +50,9 @@
             <th> Instructions </th>
         </tr>
         {% for step in meal_instructions %}
-            <tr> <td> {{ step }} </td> </tr>
+            <tr> <td> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ⚪ </td>
+                <td> {{ step }} </td>
+            </tr>
         {% endfor %}
     </table>
 </div>
