@@ -3,8 +3,8 @@
 ## What is Foodoverflow?
 Foodoverflow is a website that allows users to search for recipes based on ingredients, categories, and more. the front
 page also displays three random recipes for you to tryout.
-The recipe is then displayed in a readable and understandable format.
-You can also rate your experience with the recipe.
+The recipe is then displayed in a readable format.
+You can also rate your experience with the recipe by writing a short review and giving it up to 5 Stars.
 
 ## What is the purpose of Foodoverflow?
 We made Foodoverflow as a fun project to learn more about web development.
@@ -21,4 +21,4 @@ Foodoverflow has the following functionalities:
     * You can rate and review recipes.
 
 ## Creators
-Greenix and cryptoBLD
+[Greenix](https://github.com/Greenix1) and [cryptoBLD](https://github.com/cryptoBLD)
