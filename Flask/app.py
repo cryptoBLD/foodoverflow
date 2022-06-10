@@ -4,6 +4,7 @@ import requests.cookies
 from flask import Flask, render_template, redirect, make_response
 from flask_nav.elements import *
 import json
+import re
 
 # Flask App initialization
 app = Flask(__name__)
@@ -41,7 +42,7 @@ def details(id):
             return redirect('/', code=301)  # Redirect to homepage if id is 1 -> id is 1 if the search results are empty
         else:
             return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1],
-                                   meal_image=get_meal(id)[2], meal_id=id, name=request.cookies.get('userID'),
+                                   meal_image=get_meal(id)[2],meal_instructions=get_meal(id)[3], meal_id=id, name=request.cookies.get('userID'),
                                    reviews=get_reviews(id)[0])  # Insert Meal_data into details.html and Render the Page
     if request.method == 'POST':
         for i in range(len(tokens_dict['benutzer'])):  # Check if Token exists
@@ -55,7 +56,8 @@ def details(id):
         r = requests.post('https://informatik.mygymer.ch/fts/themealdb/', data=json_)  # Post Review
         return render_template('details.html', meal_title=get_meal(id)[0], meal_ingredients=get_meal(id)[1],
                                meal_image=get_meal(id)[2], meal_id=id, name=request.cookies.get('userID'),
-                               reviews=get_reviews(id)[0])  # Insert Meal_data into details.html and Render the Page
+                               reviews=get_reviews(id)[0],
+                               meal_instructions=get_meal(id)[3])  # Insert Meal_data into details.html and Render the Page
 
 
 # Search page
@@ -115,10 +117,16 @@ def get_meal(id):
     title = meal['meals'][0]['strMeal']
     image = meal['meals'][0]['strMealThumb']
     ingredients = {}
+    instruction = meal['meals'][0]['strInstructions']
+    instructions = re.split(r"([a-z]+\.|\)+\.)", instruction)
+    for i in range(len(instructions)):
+        instructions[i: i+2] = [''.join(instructions[i: i+2])]
+    while ("" in instructions):
+        instructions.remove("")
     for i in range(1, 20):  # Filter out empty recipes
         if meal['meals'][0]['strIngredient{0}'.format(i)] != '':  # test if ingredient not empty
             ingredients[meal['meals'][0]['strIngredient{0}'.format(i)]] = meal['meals'][0]['strMeasure{0}'.format(i)]
-    return title, ingredients, image
+    return title, ingredients, image, instructions
 
 
 # function to get a list of recipes from the API with the given filter and item
