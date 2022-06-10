@@ -143,6 +143,7 @@ button, input[type="submit"]{
     flex-wrap: wrap;
     flex: 33.333333 auto 33.333333%;
     align-items: center;
+    margin-bottom: 1em;
     justify-content: center;
 }
 
